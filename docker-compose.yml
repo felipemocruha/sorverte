@@ -1,0 +1,32 @@
+version: '2.0'
+
+services:
+    socket:
+        container_name: sorverte_socket
+        build:
+            context: .
+            dockerfile: docker/socket/Dockerfile
+        volumes:
+            - "/socket"
+        depends_on:
+            - db
+        links:
+            - db
+
+    nginx:
+        container_name: sorverte_nginx
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        volumes_from:
+            - socket
+        ports:
+            - "30030:30030"
+
+    db:
+        container_name: sorverte_db
+        build:
+             context: .
+             dockerfile: docker/db/Dockerfile
+        volumes:
+            - /data/sorverte/db:/data/db
