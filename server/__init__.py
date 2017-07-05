@@ -8,12 +8,12 @@ def create_app():
     app = Flask(__name__)
     app.register_blueprint(create_routes(Blueprint, request, utils, models))
 
-    app.config['MONGO_CONNECT'] = False
     app.config['MONGODB_SETTINGS'] = {
         'db': 'sorverte',
-        'host': 'db'
+        'host': 'db',
+        'connect': False
     }
-
+    #app.config['MONGO_CONNECT'] = False
     db = MongoEngine()
     db.init_app(app)
 
