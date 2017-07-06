@@ -10,7 +10,7 @@ def create_app():
 
     app.config['MONGODB_SETTINGS'] = {
         'db': 'sorverte',
-        'host': 'db',
+        'host': 'mongodb://localhost:27017',
         'connect': False
     }
     #app.config['MONGO_CONNECT'] = False
