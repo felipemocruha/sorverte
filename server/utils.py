@@ -3,7 +3,7 @@ import json
 
 def get_sorveterias(sorveteria_model):
     try:
-        return json.loads(sorveteria_model.objects.to_json()), 200
+        return transform_output(sorveteria_model.objects.to_json()), 200
     except:
         return 'Unable to retrieve data from sorveterias', 404
 
@@ -11,7 +11,7 @@ def get_sorveterias(sorveteria_model):
 def get_sorveteria(sorveteria_model, id):
     try:
         sorveteria = sorveteria_model.objects.get(id=id)
-        return json.loads(sorveteria.to_json()), 200
+        return transform_output(sorveteria.to_json()), 200
     except:
         return 'Unable to retrieve {}.'.format(id), 404
 
@@ -71,7 +71,7 @@ def get_sorvetes(sorveteria_model, id):
 def get_sorvete(sorveteria_model, id, s_id):
     try:
         sorveteria = sorveteria_model.objects.get(id=id)
-        return json.loads(sorveteria.sorvetes.get(s_id=s_id).to_json()), 200
+        return transform_output(sorveteria.sorvetes.get(s_id=s_id).to_json()), 200
     except:
         return 'Unable to retrieve sorvete {}'.format(s_id), 404
 
@@ -117,3 +117,7 @@ def update_sorvete(sorveteria_model, id, s_id, data):
         return 'You changed the price of your sorvete. I hope it is not too expensive...', 200
     except:
         return 'Error on updating your Sorvete.', 400
+
+
+def transform_output(s):
+    return json.dumps(json.loads(s))
